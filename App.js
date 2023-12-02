@@ -1,20 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// MultiplayerGameApp/src/App.js
+import React from 'react';
+import { ApolloProvider } from '@apollo/client';
+import AppNavigator from './src/navigation/AppNavigator';
+import apolloClient from './src/apollo/apolloClient';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const client = new ApolloClient({
+  uri: 'http://192.168.0.104:4000/graphql',
+  cache: new InMemoryCache(),
 });
+
+const App = () => {
+  return (
+    <ApolloProvider 
+    // client={apolloClient} 
+    client={client}
+    >
+      <AppNavigator />
+    </ApolloProvider>
+  );
+};
+
+export default App;
