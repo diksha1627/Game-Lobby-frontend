@@ -5,8 +5,6 @@ import { GET_TOURNAMENT, DELETE_TOURNAMENT, UPDATE_TOURNAMENT } from '../apollo/
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import Modal from 'react-native-modal';
 
-
-
 const LobbyScreen = ({ route }) => {
   const { roomName } = route.params;
   const isFocused = useIsFocused();
@@ -90,19 +88,37 @@ const LobbyScreen = ({ route }) => {
     }
   };
 
-  const renderParticipant = ({ item }) => (
-    <View
-      style={{
-        ...styles.card,
-        backgroundColor: item.isAdmin ? '#FF5733' : getRandomColor(),
-      }}
-    >
-      <Text style={styles.cardText}>
-        {item.isAdmin ? 'Admin: ' : 'Participant: '}
-        {item.username}
-      </Text>
-    </View>
-  );
+
+  const handleStartGame = (item) =>{
+    if(item.isAdmin)
+    console.log("Game Started");
+    else console.log("Game can be started by Admin")
+  }
+  const renderParticipant = ({ item }) => {
+    // const isAdminCreator = item.isAdmin && item.userId === data.getTournament.adminId;
+  
+    return (
+      <View
+        style={{
+          ...styles.card,
+          backgroundColor: item.isAdmin ? '#FF5733' : getRandomColor(),
+        }}
+      >
+        <Text style={styles.cardText}>
+          {item.isAdmin ? 'Admin: ' : 'Participant: '}
+          {item.username}
+        </Text>
+        {item.isAdmin && (
+          <TouchableOpacity style={styles.button} onPress={() => handleStartGame(item)}>
+            <Text style={styles.buttonText}>Start Game</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  };
+  
+
+  
 
   return (
     <View style={styles.container}>
@@ -149,6 +165,8 @@ const LobbyScreen = ({ route }) => {
           <TouchableOpacity onPress={toggleModal} style={styles.button}>
             <Text style={styles.buttonText}>Update Tournament</Text>
           </TouchableOpacity>
+       
+            <Text>hello</Text>
         </>
       )}
     </View>

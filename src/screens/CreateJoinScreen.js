@@ -48,10 +48,9 @@ const CreateJoinScreen = ({ navigation, route }) => {
     try {
       if (tournamentsData && tournamentsData.getTournaments) {
         // Assuming you want to join the first available tournament
-        const firstTournament = tournamentsData.getTournaments[0];
         await joinTournament({
           variables: {
-            roomId: firstTournament.roomId,
+            roomId: roomName,
             userId: userId,
             username: username,
           },
